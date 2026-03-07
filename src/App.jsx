@@ -1,3 +1,4 @@
+import Layout from './layout/Layout'
 import React from 'react'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -9,16 +10,15 @@ import { Routes, Route } from 'react-router-dom'
 
 function App() {
   return (
-    <div>
-      <Navbar />
-      <h1>Shopsphere</h1>
+    <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-    </div>
+    </Layout>
+    
   )
 }
 
