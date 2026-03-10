@@ -5,7 +5,7 @@ import { CartContext } from '../context/CartContext'
 
 function Cart() {
   const {cartItems, removeFromCart} = useContext(CartContext)
-
+  const totalPrice = cartItems.reduce((total,item) => total + item.price,0);
   return (
     <div>
       <h1>Cart Items</h1>
@@ -16,6 +16,8 @@ function Cart() {
           <button onClick={()=>removeFromCart(index)}>Remove</button>
         </div>
       ))}
+
+      <h2>Total: {totalPrice}</h2>
     </div>
   )
 }
