@@ -11,23 +11,31 @@ function Products() {
   product.title.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div>
-      <h1>Products</h1>
+    <div className='p-8'>
+      <h1 className='text-2xl font-bold mb-6'>
+        Products
+      </h1>
+
       <input 
         type ="text"
         placeholder='Search products...'
         value={search}
         onChange={(e)=> setSearch(e.target.value)}
+        className='border p-2 mb-6 w-full'
       />
-      {filteredProducts.map(product => (
-        <ProductCard 
-          id={product.id}
-          key={product.id}
-          title={product.title}
-          price={product.price}
 
-        />
-      ) )}
+      <div className='grid grid-cols-3 gap-6'>
+          {filteredProducts.map(product => (
+          <ProductCard 
+            id={product.id}
+            key={product.id}
+            title={product.title}
+            price={product.price}
+
+          />
+          ))}
+      </div>
+      
     </div>
   )
 }
