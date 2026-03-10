@@ -15,7 +15,6 @@ function App() {
   return (
     
     <Layout>
-      <h1 className='text-3xl font-bold text-blue-500'>ShopShepre</h1>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />

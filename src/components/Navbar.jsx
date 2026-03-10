@@ -6,11 +6,11 @@ import {CartContext} from '../context/CartContext'
 function Navbar() {
     const {cartItems} = useContext(CartContext)
   return (
-    <nav>
-        <div>
-            <h2>Shopsphere</h2>
-        </div>
-        <ul>
+    <nav className='bg-gray-900 text-white px-8 py-4 flex justify-between items-center'>
+        
+        <h2 className='text-xl font-bold'>Shopsphere</h2>
+        
+        <ul className='flex gap-6'>
             <li>
                 <Link to="/">Home</Link>
             </li>
