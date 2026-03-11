@@ -2,9 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import {CartContext} from '../context/CartContext'
+import { AuthContext } from '../context/AuthContext'
 
 function Navbar() {
-    const {cartItems} = useContext(CartContext)
+
+    const {cartItems} = useContext(CartContext);
+    const {isLoggedIn, logout} = useContext(AuthContext);
+
   return (
     <nav className='bg-gray-900 text-white px-8 py-4 flex justify-between items-center'>
         
@@ -20,8 +24,17 @@ function Navbar() {
             <li>
                 <Link to="/cart">Cart({cartItems.length})</Link>
             </li>
+            {isLoggedIn ? (
+                <li>
+                    <button onClick={logout}>Logout</button>
+                </li>
+                ): (
+                    <li>
+                        <Link to="/login">Login</Link>
+                    </li>
+                )}
             <li>
-                <Link to="/login">Login</Link>
+                
             </li>
         </ul>
         
