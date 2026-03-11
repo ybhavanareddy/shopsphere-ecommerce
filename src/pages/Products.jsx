@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect, useState } from 'react'
 
 import ProductGrid from '../components/ProductGrid'
@@ -35,8 +34,6 @@ function Products() {
 
   const filteredProducts = products.filter((product)=> {
 
-  
-    
     const matchesSearch = 
       product.title.toLowerCase().includes(search.toLowerCase());
 
@@ -63,7 +60,10 @@ function Products() {
       <div className='flex gap-4 mb-6 flex-wrap'>
         <button 
           onClick = {()=> setSelectedCategory("all")}
-          className='px-3 py-1 border rounded'>
+          className={`px-3 py-1 border rounded ${
+            slectedCategory === "all" ? "bg-blue-900 text-white" : "bg-white"
+          }`}
+          >
             All
           </button>
 
@@ -71,7 +71,11 @@ function Products() {
             <button 
               key={category}
               onClick={()=> setSelectedCategory(category)}
-              className='px-3 py-1 border rounded'>{category}
+              className={`px-3 py-1 border rounded ${
+                    slectedCategory === category ? "bg-blue-900 text-white" : "bg-white"
+              }`}
+              >
+                {category}
             </button>
           ))}
       </div>
