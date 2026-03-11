@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import ProductCard from '../components/ProductCard'
 import { products } from '../services/ProductService'
@@ -7,11 +7,28 @@ import { products } from '../services/ProductService'
 function Products() {
   const [search,setSearch] = useState("");
 
+  const[loading, setLoading] = useState(true);
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      setLoading(false);
+    },1000);
+  },[]);
+
+
   const filteredProducts = products.filter((product)=> 
   product.title.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className='p-8'>
+    <>
+      {loading ? (
+          <div className="flex justify-center items-center h-screen">
+            <h1 className="text-xl font-semibold">
+                Loading products...
+            </h1>
+          </div>
+      ) : (
+          <div className='p-8'>
       <h1 className='text-2xl font-bold mb-6'>
         Products
       </h1>
@@ -37,6 +54,10 @@ function Products() {
       </div>
       
     </div>
+      )}
+    
+    </>
+    
   )
 }
 
