@@ -9,3 +9,10 @@ export async function fetchProductById(id){
   const data = await response.json();
   return data;
 }
+
+export async function fetchCategories(){
+  const response = await fetch("https://fakestoreapi.com/products/categories");
+  const data = await response.json();
+  return data;
+}
+
