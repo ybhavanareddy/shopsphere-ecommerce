@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import ProductGrid from '../components/ProductGrid'
 import { fetchProducts } from '../services/ProductService'
 import { fetchCategories } from '../services/ProductService'
+import ProductSkeleton from '../components/ProductSkelton'
+
 
 function Products() {
 
@@ -77,11 +79,15 @@ if (sortOption === "rating") {
   return (
     <>
       {loading ? (
-          <div className="flex justify-center items-center h-screen">
-            <h1 className="text-xl font-semibold">
-                Loading products...
-            </h1>
-          </div>
+          <div className="grid grid-cols-3 gap-6 p-8">
+
+          {Array.from({ length: 6 }).map((_, index) => (
+
+            <ProductSkeleton key={index} />
+
+          ))}
+
+         </div>
       ) : (
           <div className='p-8'>
       <h1 className='text-2xl font-bold mb-6'>
