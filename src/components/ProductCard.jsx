@@ -3,12 +3,12 @@ import { useContext } from 'react'
 import { CartContext } from '../context/CartContext'
 import { Link } from 'react-router-dom'
 
-function ProductCard({id,title,price,image}) {
+function ProductCard({id,title,price,image,rating}) {
 
   const { addToCart } = useContext(CartContext)
 
   function handleAdd(){
-    const product = {id,title,price,image}
+    const product = {id,title,price,image,rating}
     addToCart(product)
   }
 
@@ -25,10 +25,12 @@ function ProductCard({id,title,price,image}) {
           </Link>
         </h3>
 
-        <p className='text-gray-600 mb-b'>
+        <p className='text-gray-600 mb-1'>
           Price: {price}
         </p>
-
+        <p className="text-yellow-500 mb-2">
+          ⭐ {rating.rate} ({rating.count})
+        </p>
         <button 
         onClick={handleAdd}
         className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'

@@ -47,8 +47,11 @@ function Cart() {
                   className='h-16 w-16 object-contain'
                 />
                 <div>
-                  <h3 className="font-semibold">{item.title}</h3>
-                  <p className='text-gray-600'>Price: ${item.price}</p>
+                  <h3 className="font-semibold mb-1">{item.title}</h3>
+                  <p className='text-gray-600 mb-1'>Price: ${item.price}</p>
+                  <p className="text-yellow-500 mb-2">
+                    ⭐ {item.rating.rate} ({item.rating.count})
+                  </p>
                 </div>
                 
               </div>
