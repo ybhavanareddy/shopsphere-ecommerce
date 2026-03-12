@@ -16,6 +16,8 @@ function Products() {
   const[categories, setCategories] = useState([]);
   const[slectedCategory, setSelectedCategory] = useState("all");
 
+  const[sortOption,setSortOption]  = useState("default");
+
 
   useEffect(()=>{
     const timer = setTimeout(()=>{
@@ -43,7 +45,7 @@ function Products() {
 
 
 
-  const filteredProducts = products.filter((product)=> {
+  let filteredProducts = products.filter((product)=> {
 
     const matchesSearch = 
       product.title.toLowerCase().includes(debouncedSearch.toLowerCase());
@@ -53,6 +55,24 @@ function Products() {
 
     return matchesSearch && matchesCategory;
   });
+
+  if (sortOption === "price-low") {
+
+  filteredProducts.sort((a, b) => a.price - b.price);
+
+}
+
+if (sortOption === "price-high") {
+
+  filteredProducts.sort((a, b) => b.price - a.price);
+
+}
+
+if (sortOption === "rating") {
+
+  filteredProducts.sort((a, b) => b.rating.rate - a.rating.rate);
+
+}
 
   return (
     <>
@@ -67,6 +87,22 @@ function Products() {
       <h1 className='text-2xl font-bold mb-6'>
         Products
       </h1>
+
+      <div className='mb-4'>
+        <label className='mr-2 font-semibold'>
+          Sort By:
+        </label>
+        <select 
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className='border px-2 py-1 rounded'
+        >
+          <option value="default">Default</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Rating</option>
+        </select>
+      </div>
 
       <div className='flex gap-4 mb-6 flex-wrap'>
         <button 
