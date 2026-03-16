@@ -21,6 +21,10 @@ function Products() {
   const[sortOption,setSortOption]  = useState("default");
 
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 4;
+
+
   useEffect(()=>{
     const timer = setTimeout(()=>{
       setDebouncedsearch(search);
@@ -28,6 +32,12 @@ function Products() {
     },500);
     return () => clearTimeout(timer);
   },[search]);
+//Pagination Bug fix logic
+  useEffect(() => {
+    if (currentPage !== 1) {
+    setCurrentPage(1);
+  }
+}, [debouncedSearch, slectedCategory]);
 
   useEffect(()=>{
     async function loadProducts(){
@@ -75,6 +85,18 @@ if (sortOption === "rating") {
   filteredProducts.sort((a, b) => b.rating.rate - a.rating.rate);
 
 }
+
+//Pagination Logic 
+
+const indexOfLastProduct = currentPage * productsPerPage
+
+const indexOfFirstProduct = indexOfLastProduct - productsPerPage 
+
+const currentProducts = filteredProducts.slice(
+  indexOfFirstProduct,indexOfLastProduct
+);
+
+const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   return (
     <>
@@ -141,7 +163,40 @@ if (sortOption === "rating") {
         className='border p-2 mb-6 w-full'
       />
 
-      <ProductGrid products={filteredProducts}/>
+      <ProductGrid products={currentProducts}/>
+
+      <div className='flex justify-center mt-8 gap-2'>
+        <button 
+        onClick={()=> setCurrentPage(currentPage-1)}
+        disabled = {currentPage === 1}
+        className='px-3 py-1 border rounded'
+        >
+          Prev
+        </button>
+        {Array.from({length: totalPages}).map((_,index)=>(
+
+          <button 
+            key={index}
+            onClick={()=> setCurrentPage(index+1)}
+            className={`px-3 py-1 border rounded ${
+              currentPage === index+1 ? "bg-blue-900 text-white":""
+            }`}
+          >
+            {index+1}
+          </button>
+        ))}
+
+
+        
+        <button 
+        onClick={()=> setCurrentPage(currentPage+1)}
+        disabled = {currentPage === totalPages}
+        className='px-3 py-1 border rounded'
+        >
+          Next
+        </button>
+
+      </div>
       
     </div>
       )}
