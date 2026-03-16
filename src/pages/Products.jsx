@@ -37,9 +37,19 @@ function Products() {
     if (currentPage !== 1) {
     setCurrentPage(1);
   }
-}, [debouncedSearch, slectedCategory]);
+}, [debouncedSearch, slectedCategory, sortOption]);
+
+//scroll to top when page changes
+useEffect(()=>{
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+},[currentPage]);
+
 
   useEffect(()=>{
+
     async function loadProducts(){
 
       const data = await fetchProducts();
