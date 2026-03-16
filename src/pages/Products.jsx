@@ -15,6 +15,8 @@ function Products() {
   const [products, setProducts] = useState([]);
   const[loading, setLoading] = useState(true);
 
+  const [error,setError] = useState(null)
+
   const[categories, setCategories] = useState([]);
   const[slectedCategory, setSelectedCategory] = useState("all");
 
@@ -51,15 +53,19 @@ useEffect(()=>{
   useEffect(()=>{
 
     async function loadProducts(){
+      try{
+        const data = await fetchProducts();
+        setProducts(data);
 
-      const data = await fetchProducts();
-      setProducts(data);
+        const categoryData = await fetchCategories();
+        setCategories(categoryData);
 
-      const categoryData = await fetchCategories();
-      setCategories(categoryData);
-
+      }catch(err){
+        setError("Failed to load products")
+      }finally{
+        setLoading(false);
+      }
       
-      setLoading(false);
     }
     loadProducts();
   },[]);
@@ -107,6 +113,32 @@ const currentProducts = filteredProducts.slice(
 );
 
 const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+
+if (error) {
+
+  return (
+
+    <div className="flex flex-col items-center justify-center h-screen">
+
+      <h1 className="text-xl font-semibold mb-4">
+        {error}
+      </h1>
+
+      <button
+        onClick={() => window.location.reload()}
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Retry
+      </button>
+
+    </div>
+
+  );
+
+}
+
+
 
   return (
     <>
@@ -173,7 +205,19 @@ const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
         className='border p-2 mb-6 w-full'
       />
 
-      <ProductGrid products={currentProducts}/>
+      {currentProducts.length === 0 ? (
+
+        <div className="text-center mt-10 text-lg font-semibold">
+
+          No products found
+
+        </div>
+
+      ) : (
+
+        <ProductGrid products={currentProducts} />
+
+      )}
 
       <div className='flex justify-center mt-8 gap-2'>
         <button 
