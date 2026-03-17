@@ -1,7 +1,7 @@
 
 import { useParams } from 'react-router-dom'
 import { useEffect,useState } from 'react';
-import { fetchProductById } from '../services/ProductService';
+import { fetchProductById } from '../services/temp.jsx';
 
 import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
