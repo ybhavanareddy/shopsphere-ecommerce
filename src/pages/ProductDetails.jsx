@@ -5,6 +5,9 @@ import { fetchProductById } from '../services/ProductService';
 
 import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
+import { Link } from 'react-router-dom';
+
+import ProductDetailsSkeleton from '../components/ProductDetailsSkeleton';
 
 function ProductDetails() {
 
@@ -27,12 +30,12 @@ function ProductDetails() {
     
 
     if(!product){
-      return <h1 className='text-center mt-10'>Loading product...</h1>
+      return <ProductDetailsSkeleton/>
     }
 
   return (
 
-  <div className="p-8 max-w-3xl mx-auto">
+  <div className="p-8 max-w-3xl mx-auto flex flex-col">
 
     <img
       src={product.image}
@@ -58,10 +61,17 @@ function ProductDetails() {
 
     <button
       onClick={() => addToCart(product)}
-      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 w-40"
     >
       Add to Cart
     </button>
+
+    <Link 
+        to="/products"
+        className="bg-blue-500 text-white text-center px-4 py-2 rounded hover:bg-blue-600 mb-4 w-40"
+        >
+          Go to Products
+    </Link>
 
   </div>
 
