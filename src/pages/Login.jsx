@@ -11,11 +11,13 @@ function Login() {
 
   const [email,setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+
 
   function handleSubmit(e){
     e.preventDefault();
-    login();
-    navigate("/products");
+    login(username);
+    navigate("/");
 
   }
   return (
@@ -28,6 +30,20 @@ function Login() {
         <h1 className="text-2xl font-bold mb-6 text-center">
           Login
         </h1>
+
+        <div className="mb-4">
+          <label className="block mb-1">
+            Username
+          </label>
+          <input 
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="border p-2 w-full"
+            required
+          />
+        </div>
+
         <div className="mb-4">
           <label className="block mb-1">
             Email
