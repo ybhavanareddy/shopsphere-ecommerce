@@ -13,27 +13,27 @@ function ProductCard({id,title,price,image,rating}) {
   }
 
   return (
-    <div className='border rounded-lg p-4 shadow hover:shadow-lg transition'>
+    <div className='border rounded-lg p-4 shadow hover:shadow-lg transition duration-300 flex flex-col justify-between h-full'>
         <img 
         src={image}
         alt={title}
-        className = "h-40 mx-auto object-contain mb-4"
+        className = "h-32 sm:h-36 md:h-40 mx-auto object-contain mb-4"
         />
-        <h3 className='text-lg font-semibold mb-2'>
+        <h3 className='text-sm sm:text-base md:text-lg font-semibold mb-2 line-clamp-2'>
           <Link to={`/products/${id}`}>
           {title}
           </Link>
         </h3>
 
-        <p className='text-gray-600 mb-1'>
-          Price: {price}
+        <p className='text-gray-600 text-sm sm:text-base mb-1'>
+          Price: ₹{price}
         </p>
-        <p className="text-yellow-500 mb-2">
+        <p className="text-yellow-500 text-sm mb-2">
           ⭐ {rating.rate} ({rating.count})
         </p>
         <button 
         onClick={handleAdd}
-        className='bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-600'
+        className='mt-auto bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-600 transition'
         >
           Add to Cart
         </button>
