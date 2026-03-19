@@ -93,15 +93,6 @@
 ##### Debouncing for Search
 - Prevents unnecessary renders and improves performance.
 
-## 🛠️ Tech Stack
-Technology	Purpose
-React.js	UI development
-React Router	Client-side routing
-Context API	State management
-Tailwind CSS	Styling
-FakeStore API	Mock backend data
-Vercel	Deployment
-
 ---
 
 ## 🛠️ Tech Stack
@@ -136,10 +127,13 @@ src/
 
 ## ⚙️ Run Locally
 
-git clone https://github.com/ybhavanareddy/shopsphere-react-ecommerce.git
-cd shopsphere-react-ecommerce
-npm install
-npm run dev
+- git clone https://github.com/ybhavanareddy/shopsphere-react-ecommerce.git
+
+- cd shopsphere-react-ecommerce
+
+- npm install
+
+- npm run dev
 
 ## 🧠 Key Learnings
 

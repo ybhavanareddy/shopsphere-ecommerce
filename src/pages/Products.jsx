@@ -9,7 +9,7 @@ import ProductSkeleton from '../components/ProductSkelton'
 function Products() {
 
   const [search,setSearch] = useState("");
-  const [debouncedSearch, setDebouncedsearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
 
   const [products, setProducts] = useState([]);
@@ -24,12 +24,12 @@ function Products() {
 
 
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 6;
+  const productsPerPage = 4;
 
 
   useEffect(()=>{
     const timer = setTimeout(()=>{
-      setDebouncedsearch(search);
+      setDebouncedSearch(search);
 
     },500);
     return () => clearTimeout(timer);
@@ -144,7 +144,7 @@ if (error) {
   return (
     <>
       {loading ? (
-          <div className="grid grid-cols-3 gap-6 p-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 sm:px-6 md:px-8 py-6">
 
           {Array.from({ length: 6 }).map((_, index) => (
 
@@ -154,12 +154,12 @@ if (error) {
 
          </div>
       ) : (
-          <div className='p-8'>
-      <h1 className='text-2xl font-bold mb-6'>
+          <div className='px-4 sm:px-6 md:px-8 py-6'>
+      <h1 className='text-xl sm:text-2xl md:text-3xl font-bold mb-6'>
         Products
       </h1>
 
-      <div className='mb-4'>
+      <div className='mb-4 flex flex-col sm:flex-row sm:items-center gap-2'>
         <label className='mr-2 font-semibold'>
           Sort By:
         </label>
@@ -175,7 +175,7 @@ if (error) {
         </select>
       </div>
 
-      <div className='flex gap-4 mb-6 flex-wrap'>
+      <div className='flex flex-wrap gap-2 sm:gap-3 mb-6'>
         <button 
           onClick = {()=> setSelectedCategory("all")}
           className={`px-3 py-1 border rounded ${
@@ -203,7 +203,7 @@ if (error) {
         placeholder='Search products...'
         value={search}
         onChange={(e)=> setSearch(e.target.value)}
-        className='border p-2 mb-6 w-full'
+        className='border p-2 mb-6 w-full rounded'
       />
 
       {currentProducts.length === 0 ? (
@@ -220,7 +220,7 @@ if (error) {
 
       )}
 
-      <div className='flex justify-center mt-8 gap-2'>
+      <div className='flex flex-wrap justify-center mt-8 gap-2'>
         <button 
         onClick={()=> setCurrentPage(currentPage-1)}
         disabled = {currentPage === 1}
@@ -234,7 +234,7 @@ if (error) {
             key={index}
             onClick={()=> setCurrentPage(index+1)}
             className={`px-3 py-1 border rounded ${
-              currentPage === index+1 ? "bg-blue-900 text-white":""
+              currentPage === index+1 ? "bg-blue-900 text-white":"bg-white"
             }`}
           >
             {index+1}
