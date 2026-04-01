@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
 
 import ProductGrid from '../components/ProductGrid'
 import useProducts from '../hooks/useProducts';
@@ -17,6 +17,7 @@ function Products() {
 
   const[sortOption,setSortOption]  = useState("default");
 
+  const inputRef = useRef(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 4;
@@ -45,8 +46,13 @@ useEffect(()=>{
   });
 },[currentPage]);
 
+//Auto Focus on search input when component mounts
+useEffect(()=>{
+  if (!loading && inputRef.current){
+    inputRef.current.focus();
+  }
 
-
+},[loading]);
 
 
 
@@ -179,6 +185,7 @@ if (error) {
       </div>
 
       <input 
+        ref = {inputRef}
         type ="text"
         placeholder='Search products...'
         value={search}

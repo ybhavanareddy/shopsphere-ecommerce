@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useRef, useEffect } from "react"
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
+  const usernameRef = useRef(null);
 
   function handleSubmit(e){
     e.preventDefault();
@@ -20,6 +21,12 @@ function Login() {
     navigate("/");
 
   }
+
+  //Auto Focus on username input when component mounts
+  useEffect(()=>{
+    usernameRef.current.focus();
+  },[]);
+  
   return (
     <div className="flex justify-center items-center h-screen">
 
@@ -36,6 +43,7 @@ function Login() {
             Username
           </label>
           <input 
+            ref={usernameRef}
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
