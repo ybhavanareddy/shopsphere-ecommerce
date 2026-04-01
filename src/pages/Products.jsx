@@ -1,23 +1,18 @@
 import { useEffect, useState, useMemo } from 'react'
 
 import ProductGrid from '../components/ProductGrid'
-import { fetchProducts } from '../services/ProductService.js'
-import { fetchCategories } from '../services/ProductService.js'
+import useProducts from '../hooks/useProducts';
 import ProductSkeleton from '../components/ProductSkelton'
 
 
 function Products() {
+  const{products,loading,error,categories} = useProducts();
 
   const [search,setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
 
-  const [products, setProducts] = useState([]);
-  const[loading, setLoading] = useState(true);
-
-  const [error,setError] = useState(null)
-
-  const[categories, setCategories] = useState([]);
+  
   const[selectedCategory, setSelectedCategory] = useState("all");
 
   const[sortOption,setSortOption]  = useState("default");
@@ -51,28 +46,7 @@ useEffect(()=>{
 },[currentPage]);
 
 
-useEffect(()=>{
 
-    async function loadProducts(){
-      try{
-        setLoading(true);
-        setError(null);
-
-        const data = await fetchProducts();
-        setProducts(data);
-
-        const categoryData = await fetchCategories();
-        setCategories(categoryData);
-
-      }catch(err){
-        setError("Failed to load products")
-      }finally{
-        setLoading(false);
-      }
-      
-    }
-    loadProducts();
-},[]);
 
 
 
