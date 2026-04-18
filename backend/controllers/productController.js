@@ -28,6 +28,7 @@ export const getProducts = (req,res)=> {
     res.json(products);
 };
 
+//Get single product by ID
 export const getProductsById = (req,res)=> {
 
     const products = [
@@ -63,3 +64,28 @@ export const getProductsById = (req,res)=> {
 
     res.json(product);
 };
+
+//Add new Product 
+
+export const createProduct = (req,res)=>{
+    const {title,price,thumbnail,rating} = req.body;
+
+    //Basic Validation 
+    if(!title || !price){
+        return res.status(400).json({
+            message:"Title and price are required"
+        });
+    }
+    const newProduct = {
+        id:Date.now(), //temp unique id
+        title,
+        price,
+        thumbnail,
+        rating
+    };
+    res.status(201).json({
+        message:"Product created successfully",
+        product: newProduct
+    });
+};
+
