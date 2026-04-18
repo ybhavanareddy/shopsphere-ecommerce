@@ -2,7 +2,8 @@ import express from 'express';
 import { getProducts ,
     getProductsById, 
     createProduct,
-    updateProduct
+    updateProduct,
+    deleteProduct
 } from '../controllers/productController.js';
 
 const router = express.Router();
@@ -19,5 +20,9 @@ router.post("/",createProduct)
 
 //PUT update product
 router.put("/:id",updateProduct)
+
+
+//DELETE product
+router.delete("/:id",deleteProduct)
 
 export default router;
