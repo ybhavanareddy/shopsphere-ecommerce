@@ -3,9 +3,11 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import productRoutes from './routes/productRoutes.js';
+import connectDB from './config/db.js';
+
 
 dotenv.config();
-
+connectDB();
 const app = express();
 
 //Middleware
