@@ -1,183 +1,107 @@
+import Product from "../models/Product.js";
+
 //Get all products 
 
-export const getProducts = (req,res)=> {
+export const getProducts = async(req,res)=> {
 
-     const products = [
-        {
-            id:1,
-            title:"iPhone 15",
-            price:79999,
-            thumbnail:"https://m.media-amazon.com/images/I/71MlcO29QOL._SL1500_.jpg",
-            rating:4.5
-        },
-        {
-            id:2,
-            title:"Samsung Galaxy S23",
-            price:69999,
-            thumbnail:"https://m.media-amazon.com/images/I/91w+qj8n9sL._SL1500_.jpg",
-            rating:4.3
-        },
-        {
-            id:3,
-            title:"Google Pixel 7",
-            price:59999,
-            thumbnail:"https://m.media-amazon.com/images/I/71w+qj8n9sL._SL1500_.jpg",
-            rating:4.2
-        }
-    ];
-    res.json(products);
+     try {
+         const products = await Product.find();
+         res.json(products);
+
+     } catch (error) {
+         res.status(500).json({message: error.message});
+     }
 };
 
 //Get single product by ID
-export const getProductsById = (req,res)=> {
+export const getProductsById = async(req,res)=> {
 
-    const products = [
-        {
-            id:1,
-            title:"iPhone 15",
-            price:79999,
-            thumbnail:"https://m.media-amazon.com/images/I/71MlcO29QOL._SL1500_.jpg",
-            rating:4.5
-        },
-        {
-            id:2,
-            title:"Samsung Galaxy S23",
-            price:69999,
-            thumbnail:"https://m.media-amazon.com/images/I/91w+qj8n9sL._SL1500_.jpg",
-            rating:4.3
-        },
-        {
-            id:3,
-            title:"Google Pixel 7",
-            price:59999,
-            thumbnail:"https://m.media-amazon.com/images/I/71w+qj8n9sL._SL1500_.jpg",
-            rating:4.2
-        }
-    ];
-
-    const productId = parseInt(req.params.id);
-    const product = products.find((item) => item.id === productId);
-
+    try {
+        const productId = req.params.id;
+        const product = await Product.findById(productId);
+    
     if(!product){
         return res.status(404).json({message:"Product not found"});
     }
 
     res.json(product);
+
+    } catch (error) {
+    res.status(500).json({message: error.message});
+    }
 };
 
 //Add new Product 
 
-export const createProduct = (req,res)=>{
-    const {title,price,thumbnail,rating} = req.body;
+export const createProduct = async(req,res)=>{
+    try{
+        const {title,price,thumbnail,rating} = req.body;
+        //Basic Validation 
+        if(!title || !price){
+                return res.status(400).json({
+                message:"Title and price are required"
+            });
+        }
 
-    //Basic Validation 
-    if(!title || !price){
-        return res.status(400).json({
-            message:"Title and price are required"
-        });
+        const product = new Product({
+            title,
+            price,
+            thumbnail,
+            rating
+         });
+        
+        
+        const savedProduct = await product.save();
+        res.status(201).json(savedProduct);
+    } catch (error) {
+        res.status(500).json({message: error.message});
     }
-    const newProduct = {
-        id:Date.now(), //temp unique id
-        title,
-        price,
-        thumbnail,
-        rating
-    };
-    res.status(201).json({
-        message:"Product created successfully",
-        product: newProduct
-    });
+       
 };
 
 //update produuct 
 
-export const updateProduct = (req,res)=>{
+export const updateProduct = async(req,res)=>{
 
-    const productId = parseInt(req.params.id);
-
-    const {title,price,thumbnail,rating} = req.body;    
-    
-    const products = [
-        {
-            id:1,
-            title:"iPhone 15",
-            price:79999,
-            thumbnail:"https://m.media-amazon.com/images/I/71MlcO29QOL._SL1500_.jpg",
-            rating:4.5
-        },
-        {
-            id:2,
-            title:"Samsung Galaxy S23",
-            price:69999,
-            thumbnail:"https://m.media-amazon.com/images/I/91w+qj8n9sL._SL1500_.jpg",
-            rating:4.3
-        },
-        {
-            id:3,
-            title:"Google Pixel 7",
-            price:59999,
-            thumbnail:"https://m.media-amazon.com/images/I/71w+qj8n9sL._SL1500_.jpg",
-            rating:4.2
+    try{
+        const product = await Product.findById(req.params.id);
+        if(!product){
+            return res.status(404).json({message:"Product not found"});
         }
-    ];
+        const {title,price,thumbnail,rating} = req.body;
 
-    
-    const product = products.find((item) => item.id === productId);
+        if(title) product.title = title;
+        if(price) product.price = price;
+        if(thumbnail) product.thumbnail = thumbnail;
+        if(rating) product.rating = rating;
 
-    if(!product){
-        return res.status(404).json({message:"Product not found"});
+        const updatedProduct = await product.save();
+        res.json(updatedProduct);
+
+    }catch (error) {
+        res.status(500).json({message: error.message});
     }
-
-    //update field(only if provided)
-    if(title) product.title = title;
-    if(price) product.price = price;
-    if(thumbnail) product.thumbnail = thumbnail;
-    if(rating) product.rating = rating;
-
-    res.json({
-        message:"Product updated successfully",
-        product
-    });
+ 
 };
 
 //Delete product 
 
-export const deleteProduct = (req,res)=>{
-    const productId = parseInt(req.params.id);
+export const deleteProduct = async (req,res)=>{
+    try {
+        const product = await Product.findById(req.params.id);
 
-    const products = [
-        {
-            id:1,
-            title:"iPhone 15",
-            price:79999,
-            thumbnail:"https://m.media-amazon.com/images/I/71MlcO29QOL._SL1500_.jpg",
-            rating:4.5
-        },
-        {
-            id:2,
-            title:"Samsung Galaxy S23",
-            price:69999,
-            thumbnail:"https://m.media-amazon.com/images/I/91w+qj8n9sL._SL1500_.jpg",
-            rating:4.3
-        },
-        {
-            id:3,
-            title:"Google Pixel 7",
-            price:59999,
-            thumbnail:"https://m.media-amazon.com/images/I/71w+qj8n9sL._SL1500_.jpg",
-            rating:4.2
+        if(!product){
+            return res.status(404).json({message:"Product not found"});
         }
-    ];
 
-    const product = products.find((item)=> item.id === productId);
-          
-    if(!product){
-         return res.status(404).json({message:"Product not found"});
+        await product.deleteOne();
+
+        res.json({
+            message:"Product deleted successfully",
+            product
+        });
+
+    } catch (error) {
+        res.status(500).json({message: error.message});
     }
-
-    res.json({
-        message:"Product deleted successfully",
-        deltedProductId: productId
-    });
-
 };
