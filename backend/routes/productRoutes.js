@@ -1,4 +1,7 @@
 import express from 'express';
+
+import protect from '../middlewares/authMiddleware.js';
+
 import { getProducts ,
     getProductsById, 
     createProduct,
@@ -8,21 +11,25 @@ import { getProducts ,
 
 const router = express.Router();
 
+/* ======= public routes ======= */
+
 // GET all products -> api/products
 router.get("/", getProducts);
 
 // GET single product -> api/products/:id
 router.get("/:id", getProductsById);
 
+
+/* ======= protected routes ======= */
 //POST product 
-router.post("/",createProduct)
+router.post("/", protect, createProduct)
 
 
 //PUT update product
-router.put("/:id",updateProduct)
+router.put("/:id", protect, updateProduct)
 
 
 //DELETE product
-router.delete("/:id",deleteProduct)
+router.delete("/:id", protect, deleteProduct)
 
 export default router;
