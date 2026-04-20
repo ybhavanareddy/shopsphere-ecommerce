@@ -6,8 +6,8 @@ function ProductGrid({products}) {
         {products.map((product)=>(
             
                 <ProductCard 
-                    key={product.id}
-                    id={product.id}
+                    key={product._id}
+                    id={product._id}
                     title={product.title}
                     price={product.price}
                     thumbnail= {product.thumbnail}

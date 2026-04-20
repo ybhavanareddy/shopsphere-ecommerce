@@ -35,7 +35,7 @@ export const getProductsById = async(req,res)=> {
 
 export const createProduct = async(req,res)=>{
     try{
-        const {title,price,thumbnail,rating} = req.body;
+        const {title,price,thumbnail,rating,category,description} = req.body;
         //Basic Validation 
         if(!title || !price){
                 return res.status(400).json({
@@ -47,7 +47,10 @@ export const createProduct = async(req,res)=>{
             title,
             price,
             thumbnail,
-            rating
+            rating,
+            category,
+            description
+
          });
         
         
@@ -68,12 +71,14 @@ export const updateProduct = async(req,res)=>{
         if(!product){
             return res.status(404).json({message:"Product not found"});
         }
-        const {title,price,thumbnail,rating} = req.body;
+        const {title,price,thumbnail,rating,category,description} = req.body;
 
         if(title) product.title = title;
         if(price) product.price = price;
         if(thumbnail) product.thumbnail = thumbnail;
         if(rating) product.rating = rating;
+        if(category) product.category = category;
+        if(description) product.description = description;
 
         const updatedProduct = await product.save();
         res.json(updatedProduct);
@@ -105,3 +110,16 @@ export const deleteProduct = async (req,res)=>{
         res.status(500).json({message: error.message});
     }
 };
+
+//get categories from products
+export const getCategories = async (req, res) => {
+  try {
+    const categories = await Product.distinct("category");
+
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+

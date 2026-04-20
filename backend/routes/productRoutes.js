@@ -6,12 +6,19 @@ import { getProducts ,
     getProductsById, 
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getCategories
+   
+    
+    
 } from '../controllers/productController.js';
 
 const router = express.Router();
 
 /* ======= public routes ======= */
+
+//get all categories -> api/products/categories
+router.get("/categories", getCategories);
 
 // GET all products -> api/products
 router.get("/", getProducts);
@@ -31,5 +38,6 @@ router.put("/:id", protect, updateProduct)
 
 //DELETE product
 router.delete("/:id", protect, deleteProduct)
+
 
 export default router;
