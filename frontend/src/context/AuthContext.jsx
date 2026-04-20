@@ -3,28 +3,32 @@ import { createContext, useState } from "react";
 export const AuthContext = createContext();
 
 function AuthProvider({children}) {
-    const [isLoggedIn, setIsLoggedIn] = useState(
-        localStorage.getItem("isLoggedIn") === "true"
+    //store token and username in state and localStorage for persistence
+    const [token, setToken] = useState(
+        localStorage.getItem("token") || null
     );
     const [username, setUsername] = useState(
         localStorage.getItem("userName") || ""
     );
 
     
+    //deriveed state
 
-    function login(name){
-        setIsLoggedIn(true);
+    const isLoggedIn = !!token;
+
+    function login(name,userToken){
+        setToken(userToken);
         setUsername(name);
 
-        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("token", userToken);
         localStorage.setItem("userName",name);
     }
 
     function logout(){
-        setIsLoggedIn(false);    
+        setToken(null);
         setUsername("");
 
-        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("token");
         localStorage.removeItem("userName");
     }
     

@@ -24,12 +24,11 @@ function Login() {
 
       if(response.token){
         //store token in localStorage
-        localStorage.setItem("token", response.token);
+        login(username,response.token);
 
-        //update UI state 
-        login(username);
+        
         //redirect to home page 
-      navigate("/");
+        navigate("/");
       }
       else{
       alert(response.message || "Login failed");
