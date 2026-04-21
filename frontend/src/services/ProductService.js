@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api/products";
+const BASE_URL = "https://shopsphere-backend-xs4m.onrender.com/api/products";
 
 export async function fetchProducts(){
   const response = await fetch(BASE_URL);
@@ -13,7 +13,7 @@ export async function fetchProductById(id){
 }
 
 export async function fetchCategories(){
-  const response = await fetch("http://localhost:5000/api/products/categories");
+  const response = await fetch(`${BASE_URL}/categories`);
   const data = await response.json();
   return data.map(cat => ({
     slug:cat,

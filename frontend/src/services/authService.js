@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api/auth";
+const BASE_URL = "https://shopsphere-backend-xs4m.onrender.com/api/auth";
 
 //Registr User 
 
