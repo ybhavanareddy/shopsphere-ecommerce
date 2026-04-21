@@ -9,7 +9,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const {login} = useContext(AuthContext);
+  const {login,isLoggedIn} = useContext(AuthContext);
 
   const [email,setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,8 +27,7 @@ function Login() {
         login(response.name,response.token);
 
         
-        //redirect to home page 
-        navigate("/");
+        
       }
       else{
       alert(response.message || "Login failed");
@@ -46,8 +45,15 @@ function Login() {
 
   //Auto Focus on username input when component mounts
   useEffect(()=>{
-    emailRef.current.focus();
+    emailRef.current?.focus();
   },[]);
+
+//prevent  logged-in user from opening login 
+useEffect(() => {
+  if (isLoggedIn) {
+    navigate("/",{replace:true});
+  }
+}, [isLoggedIn]);
   
   return (
     <div className="flex justify-center items-center h-screen">

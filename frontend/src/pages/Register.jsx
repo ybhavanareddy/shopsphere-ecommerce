@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useContext,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import { registerUser } from "../services/authService";
 
 function Register() {
+  const {isLoggedIn} = useContext(AuthContext)
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +31,11 @@ function Register() {
     }
   };
 
+  useEffect(() => {
+  if (isLoggedIn) {
+    navigate("/");
+  }
+}, [isLoggedIn]);
   return (
     <div className="flex justify-center items-center h-screen">
       <form onSubmit={handleSubmit} className="border p-8 rounded shadow w-80">
