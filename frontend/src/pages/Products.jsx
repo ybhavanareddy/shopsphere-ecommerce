@@ -20,7 +20,7 @@ function Products() {
   const inputRef = useRef(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 4;
+  const productsPerPage = 8;
 
 
   useEffect(()=>{
@@ -132,7 +132,7 @@ if (error) {
       {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 sm:px-6 md:px-8 py-6">
 
-          {Array.from({ length: 6 }).map((_, index) => (
+          {Array.from({ length: 8 }).map((_, index) => (
 
             <ProductSkeleton key={index} />
 

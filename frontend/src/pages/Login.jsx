@@ -13,9 +13,9 @@ function Login() {
 
   const [email,setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  
 
-  const usernameRef = useRef(null);
+  const emailRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ function Login() {
 
       if(response.token){
         //store token in localStorage
-        login(username,response.token);
+        login(response.name,response.token);
 
         
         //redirect to home page 
@@ -46,7 +46,7 @@ function Login() {
 
   //Auto Focus on username input when component mounts
   useEffect(()=>{
-    usernameRef.current.focus();
+    emailRef.current.focus();
   },[]);
   
   return (
@@ -60,25 +60,14 @@ function Login() {
           Login
         </h1>
 
-        <div className="mb-4">
-          <label className="block mb-1">
-            Username
-          </label>
-          <input 
-            ref={usernameRef}
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
+        
 
         <div className="mb-4">
           <label className="block mb-1">
             Email
           </label>
           <input 
+            ref={emailRef}
             type="email"
             value={email}
             onChange={(e)=> setEmail(e.target.value)}
@@ -106,6 +95,16 @@ function Login() {
         >
           Login
         </button>
+
+        <p className ="text-center mt-4 text-sm">
+          Don't have an account?{" "}
+          <span 
+            className="text-blue-600 cursor-pointer"
+            onClick={()=> navigate("/register")}
+          >
+            Register 
+          </span>
+        </p>
       </form>
 
 

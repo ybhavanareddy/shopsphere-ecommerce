@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Products from './pages/Products'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import ProductDetails from './pages/ProductDetails'
 import ProtectedRoute from './components/ProtectedRoute'
 import Checkout from './pages/Checkout'
@@ -21,7 +22,7 @@ function App() {
     
     <Routes>
       <Route path="/login" element={<Login />} />
-        
+      <Route path="/register" element={<Register/>}/>
         <Route 
           path="/"
           element={
@@ -31,7 +32,7 @@ function App() {
           }
         >
         <Route 
-          path="/" 
+          index 
           element={<Home />} />
 
         <Route 
