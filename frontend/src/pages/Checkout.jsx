@@ -11,7 +11,7 @@ function Checkout() {
 
     async function handlePlaceOrder() {
     await clearCart();          
-    navigate("/order-confirm"); 
+    navigate("/order-conformation"); 
     }
 
     if (loading) {

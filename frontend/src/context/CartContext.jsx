@@ -12,20 +12,24 @@ function CartProvider({children}){
     
     async function loadCart(){
         try{
-            setLoading(true);
+            
             const data = await fetchCart();
             setCartItems(data.items || []);
         }
         catch(error){
             console.error("Error fetching cart:", error);
-        }finally{
-            setLoading(false);
         }
     }
 
-    useEffect(()=>{
-        loadCart();
-    },[]);
+    useEffect(() => {
+        async function initCart() {
+            setLoading(true);   // ✅ only here
+            await loadCart();
+            setLoading(false);  // ✅ only here
+        }
+
+        initCart();
+    }, []);
 
     async function addToCart(product) {
     try {
