@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 import ProductGrid from '../components/ProductGrid'
 import useProducts from '../hooks/useProducts';

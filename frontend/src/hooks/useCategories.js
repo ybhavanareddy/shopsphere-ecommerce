@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchCategories } from "../services/productService";
+import { fetchCategories } from "../services/ProductService";
 
 function useCategories() {
 
